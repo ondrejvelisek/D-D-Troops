@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.muni.pa165.d.d.troops;
+package cz.muni.pa165.ddtroops.dao;
 
+import cz.muni.pa165.ddtroops.entity.Hero;
 import java.util.List;
 
 /**
  *
  * @author Dufkova
  */
-public interface HeroManager {
+public interface HeroDao {
     public Long createHero(Hero hero);
     public List<Hero> getAllHeroes();
     public Hero getHeroById(Long id);

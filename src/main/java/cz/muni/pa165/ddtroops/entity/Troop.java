@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.muni.pa165.d.d.troops;
+package cz.muni.pa165.ddtroops.entity;
 
 import java.math.BigDecimal;
 import java.util.Objects;
