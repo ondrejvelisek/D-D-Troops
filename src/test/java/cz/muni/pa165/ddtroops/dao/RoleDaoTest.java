@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
  * @author 
  */
 @ContextConfiguration(classes = {PersistenceTestApplicationContext.class})
-public class RoleDaoTests extends AbstractTestNGSpringContextTests {
+public class RoleDaoTest extends AbstractTestNGSpringContextTests {
 
     private RoleDao dao;
     private EntityManager manager;
