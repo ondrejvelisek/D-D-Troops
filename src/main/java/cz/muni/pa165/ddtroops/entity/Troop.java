@@ -6,7 +6,11 @@ package cz.muni.pa165.ddtroops.entity;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -15,13 +19,16 @@ import javax.persistence.Id;
 public class Troop {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
     private String mission;
     private BigDecimal gold;
 
-    public Troop(Long id, String name, String mission, BigDecimal gold) {
-        this.id = id;
+    public Troop(String name, String mission, BigDecimal gold) {
+        if (name == null) throw new IllegalArgumentException("name");
         this.name = name;
         this.mission = mission;
         this.gold = gold;
@@ -62,10 +69,7 @@ public class Troop {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.name);
-        hash = 71 * hash + Objects.hashCode(this.mission);
-        hash = 71 * hash + Objects.hashCode(this.gold);
+        hash = 71 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }
 
@@ -74,23 +78,32 @@ public class Troop {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Troop)) {
             return false;
         }
         final Troop other = (Troop) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.mission, other.mission)) {
-            return false;
-        }
-        if (!Objects.equals(this.gold, other.gold)) {
+        if (name == null) {
+            if (other.getName() != null) {
+                return false;
+            }
+        } else if (!name.equals(other.getName())) {
             return false;
         }
         return true;
-    }    
+    }   
+
+    @Override
+    public String toString() {
+        return "Troop{" 
+                + "id=" + id 
+                + ", name=" + name 
+                + ", mission=" + mission 
+                + ", gold=" + gold + '}';
+    }
+    
+    
         
 }
