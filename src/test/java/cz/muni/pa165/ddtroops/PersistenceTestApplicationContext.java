@@ -23,7 +23,7 @@ import cz.muni.pa165.ddtroops.dao.*;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackageClasses={RoleDao.class, HeroDao.class, TroopDao.class})
+@ComponentScan(basePackages = "cz.muni.pa165.ddtroops.entity")
 public class PersistenceTestApplicationContext {
 	
 	@Bean 
