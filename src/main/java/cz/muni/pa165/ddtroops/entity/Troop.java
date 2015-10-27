@@ -13,7 +13,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 /**
- *
+ * Troop contains name, mission and amount of gold.
+ * 
  * @author ciffi
  */
 public class Troop {

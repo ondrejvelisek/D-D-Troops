@@ -14,7 +14,8 @@ import java.util.List;
 public interface TroopDao {
     public Long createTroop(Troop troop);
     public Troop getTroopById(Long id);
+    public Troop getTroopByName(String name);
     public List<Troop> getAllTroops();
-    public void updateTroop(Troop troop);
+    public void updateTroop(Long fromId, Troop to);
     public void deleteTroop(Troop troop);
 }
