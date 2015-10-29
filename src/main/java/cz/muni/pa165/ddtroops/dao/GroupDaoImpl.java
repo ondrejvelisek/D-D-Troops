@@ -39,7 +39,7 @@ public class GroupDaoImpl implements GroupDao{
     @Override
     public Group getGroupByName(String name) {
         try{
-            return em.createQuery("select g from Group g where name = :group",Group.class).setParameter("name", name).getSingleResult();
+            return em.createQuery("select g from Group g where name = :name",Group.class).setParameter("name", name).getSingleResult();
         }catch(NoResultException nre){
             return null;
         }

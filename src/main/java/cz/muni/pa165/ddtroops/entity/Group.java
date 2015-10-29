@@ -6,6 +6,12 @@
 package cz.muni.pa165.ddtroops.entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -21,7 +27,7 @@ public class Group {
     @Column(nullable = false, unique = true)
     private String name;
 
-    public Group(String name, String mission, BigDecimal gold) {
+    public Group(String name) {
         if (name == null) throw new IllegalArgumentException("Invalid Group name. Name is null");
         this.name = name;
     }
