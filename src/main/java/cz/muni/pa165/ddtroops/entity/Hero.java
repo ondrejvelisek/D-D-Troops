@@ -6,6 +6,9 @@
 package cz.muni.pa165.ddtroops.entity;
 
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -13,9 +16,11 @@ import javax.persistence.ManyToOne;
  *
  * @author Dufkova
  */
+@Entity
 public class Hero {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String name;
     @ManyToOne
