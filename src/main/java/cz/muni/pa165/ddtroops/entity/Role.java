@@ -1,7 +1,9 @@
 package cz.muni.pa165.ddtroops.entity;
 
 import cz.muni.pa165.ddtroops.enums.Resource;
-import java.io.Serializable;
+import java.util.HashSet;
+import java.util.NoSuchElementException;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -12,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * @author Martin Bajanik
  */
 @Entity
-public class Role implements Serializable {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,6 +26,12 @@ public class Role implements Serializable {
     @Column(nullable = false)
     private Resource resource;
     private String description;
+    @ManyToMany
+    private Set<Hero> heroes = new HashSet<Hero>();
+
+    public Set<Hero> getHeroes() {
+        return heroes;
+    }
 
     public Role() {
     }
@@ -71,6 +79,19 @@ public class Role implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    
+    public void addHero(Hero hero) {
+        this.heroes.add(hero);
+    }
+
+    public void removeHero(Hero hero) {
+        if (!this.heroes.contains(hero)) {
+            throw new NoSuchElementException("No hero: " + hero.toString());
+        }
+
+        this.heroes.remove(hero);
     }
 
     @Override

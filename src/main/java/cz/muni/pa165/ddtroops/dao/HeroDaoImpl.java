@@ -1,42 +1,60 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.pa165.ddtroops.dao;
 
 import cz.muni.pa165.ddtroops.entity.Hero;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Dufkova
  */
+@Transactional
+@Repository
 public class HeroDaoImpl implements HeroDao{
 
+    @PersistenceContext
+    private EntityManager em;
+    
     @Override
     public Long createHero(Hero hero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.persist(hero);
+        return hero.getId();
     }
 
     @Override
     public List<Hero> getAllHeroes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.createQuery("select c from Hero c", Hero.class)
+                .getResultList();
     }
 
     @Override
     public Hero getHeroById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.find(Hero.class, id);
     }
 
     @Override
     public void updateHero(Hero hero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.merge(hero);
     }
 
     @Override
     public void deleteHero(Hero hero) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       em.remove(hero);
+    }
+
+    public Hero getHeroByName(String name) {
+        try {
+            return em
+                    .createQuery("select c from Hero c where name = :name",
+                    Hero.class).setParameter("name", name)
+                    .getSingleResult();
+        } catch (NoResultException nrf) {
+            return null;
+        }
     }
     
     

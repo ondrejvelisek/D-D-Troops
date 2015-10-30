@@ -1,23 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.pa165.ddtroops.entity;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
  * Troop contains name, mission and amount of gold.
- * 
+ *
  * @author Filip Ciffary
  */
 @Entity
-public class Troop implements Serializable{
-    
+public class Troop {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -29,9 +23,11 @@ public class Troop implements Serializable{
 
     public Troop() {
     }
-    
+
     public Troop(String name, String mission, BigDecimal gold) {
-        if (name == null) throw new IllegalArgumentException("name");
+        if (name == null) {
+            throw new IllegalArgumentException("name");
+        }
         this.name = name;
         this.mission = mission;
         this.gold = gold;
@@ -96,17 +92,14 @@ public class Troop implements Serializable{
             return false;
         }
         return true;
-    }   
+    }
 
     @Override
     public String toString() {
-        return "Troop{" 
-                + "id=" + id 
-                + ", name=" + name 
-                + ", mission=" + mission 
+        return "Troop{"
+                + "id=" + id
+                + ", name=" + name
+                + ", mission=" + mission
                 + ", gold=" + gold + '}';
     }
-    
-    
-        
 }

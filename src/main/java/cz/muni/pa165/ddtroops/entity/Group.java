@@ -1,37 +1,39 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.pa165.ddtroops.entity;
 
-import java.math.BigDecimal;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.NoSuchElementException;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
-
 
 /**
  *
  * @author Peter Strieška
  */
-
-@Entity
+@Entity(name = "HeroGroup") // Group is reserved keyword in database
 public class Group {
-        
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @NotNull
     @Column(nullable = false, unique = true)
     private String name;
+    @ManyToMany
+    private Set<Hero> heroes = new HashSet<Hero>();
+
+    public Group() {
+    }
 
     public Group(String name) {
-        if (name == null) throw new IllegalArgumentException("Invalid Group name. Name is null");
+        if (name == null) {
+            throw new IllegalArgumentException("Invalid Group name. Name is null");
+        }
         this.name = name;
     }
 
@@ -78,16 +80,24 @@ public class Group {
             return false;
         }
         return true;
-    }   
+    }
 
     @Override
     public String toString() {
-        return "Group{" 
-                + "id=" + id 
+        return "Group{"
+                + "id=" + id
                 + ", name=" + name + '}';
     }
-    
-    
 
-    
+    public void addHero(Hero hero) {
+        this.heroes.add(hero);
+    }
+
+    public void removeHero(Hero hero) {
+        if (!this.heroes.contains(hero)) {
+            throw new NoSuchElementException("No hero: " + hero.toString());
+        }
+
+        this.heroes.remove(hero);
+    }
 }

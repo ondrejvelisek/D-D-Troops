@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.pa165.ddtroops.dao;
 
 import cz.muni.pa165.ddtroops.entity.Troop;
@@ -42,10 +38,9 @@ public interface TroopDao {
     
     /**
      * Updates specific troop
-     * @param fromId Id of troop to be updated
-     * @param to New state of troop
+     * @param troop Troop to be updated
      */
-    public void updateTroop(Long fromId, Troop to);
+    public void updateTroop(Troop troop);
     
     /**
      * Removes specific troop

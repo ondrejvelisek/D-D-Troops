@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.pa165.ddtroops.dao;
 
 import cz.muni.pa165.ddtroops.entity.Troop;
@@ -9,21 +5,21 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of TroopDao interface
  * 
  * @author Filip Ciffary
  */
+@Transactional
+@Repository
 public class TroopDaoImpl implements TroopDao{
     
     @PersistenceContext
     private EntityManager em;
 
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
-    
     @Override
     public Long createTroop(Troop troop) {
         em.persist(troop);
@@ -54,13 +50,8 @@ public class TroopDaoImpl implements TroopDao{
     }
 
     @Override
-    public void updateTroop(Long fromId, Troop to) {
-        Troop from = getTroopById(fromId);
-        from.setId(to.getId());
-        from.setName(to.getName());
-        from.setMission(to.getMission());
-        from.setGold(to.getGold());
-        em.merge(from);
+    public void updateTroop(Troop troop) {
+        em.merge(troop);
     }
 
     @Override

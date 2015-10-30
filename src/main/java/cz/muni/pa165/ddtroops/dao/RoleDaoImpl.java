@@ -6,20 +6,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Martin Bajanik
  */
+@Transactional
 @Repository
 public class RoleDaoImpl implements RoleDao {
 
     @PersistenceContext
     private EntityManager em;
-
-    public void setEntityManager(EntityManager manager) {
-        this.em = manager;
-    }
 
     /**
      * Returns role according to given id.
@@ -55,6 +53,11 @@ public class RoleDaoImpl implements RoleDao {
      */
     public void delete(Role role) {
         em.remove(role);
+    }
+    
+    public void update(Role role)
+    {
+        em.merge(role);
     }
 
     /**

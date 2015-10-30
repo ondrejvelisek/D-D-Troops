@@ -1,62 +1,39 @@
 package cz.muni.pa165.ddtroops;
 
-import javax.sql.DataSource;
-
-import org.hibernate.jpa.HibernatePersistenceProvider;
+import javax.activation.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
-import org.springframework.instrument.classloading.LoadTimeWeaver;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-
-import cz.muni.pa165.ddtroops.dao.*;
-
 
 @Configuration
+@ComponentScan(basePackages = "cz.muni.pa165.ddtroops")
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackages = "cz.muni.pa165.ddtroops.entity")
 public class PersistenceTestApplicationContext {
-	
-	@Bean 
-	public JpaTransactionManager transactionManager(){
-		return  new JpaTransactionManager(entityManagerFactory().getObject());
-	}
-	
-	/**
-	 * Starts up a container that emulates behavior prescribed in JPA spec for container-managed EntityManager
-	 * @return
-	 */
-	@Bean
-	public LocalContainerEntityManagerFactoryBean  entityManagerFactory(){
-		LocalContainerEntityManagerFactoryBean jpaFactoryBean = new LocalContainerEntityManagerFactoryBean ();
-		jpaFactoryBean.setDataSource(db());
-		jpaFactoryBean.setLoadTimeWeaver(instrumentationLoadTimeWeaver());
-		jpaFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-		return jpaFactoryBean;
-	}
-	
-	@Bean 
-	public LocalValidatorFactoryBean localValidatorFactoryBean(){
-		return new LocalValidatorFactoryBean();
-	}
-	@Bean
-	public LoadTimeWeaver instrumentationLoadTimeWeaver() {
-		return new InstrumentationLoadTimeWeaver();
-	}
-	
-	@Bean
-	public DataSource db(){
-		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-		EmbeddedDatabase db = builder.setType(EmbeddedDatabaseType.DERBY).build();
-		return db;
-	}
+
+    @Bean
+    public JpaTransactionManager transactionManager() {
+        return new JpaTransactionManager(entityManagerFactory().getObject());
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean jpaFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        jpaFactoryBean.setDataSource(db());
+        return jpaFactoryBean;
+    }
+
+    @Bean
+    public EmbeddedDatabase db() {
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        EmbeddedDatabase db = builder.setType(EmbeddedDatabaseType.DERBY).build();
+        return db;
+    }
 }
