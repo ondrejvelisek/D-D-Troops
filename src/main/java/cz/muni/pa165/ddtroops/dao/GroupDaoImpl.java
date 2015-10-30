@@ -20,7 +20,7 @@ public class GroupDaoImpl implements GroupDao{
     @PersistenceContext
     private EntityManager em;
     
-    public void setEm(EntityManager em){
+    public void setEntityManager(EntityManager em){
         this.em = em;
     }
     
@@ -29,6 +29,20 @@ public class GroupDaoImpl implements GroupDao{
     {
         em.persist(group);
         return group.getId();
+    }
+    public Group findGroupByName(String name) {
+        try {
+            return em
+                    .createQuery("select g from Group g where name = :name",
+                    Group.class).setParameter("name", name)
+                    .getSingleResult();
+        } catch (NoResultException nrf) {
+            return null;
+        }
+    }
+    public List<Group> findAllGroups() {
+        return em.createQuery("select g from Group g", Group.class)
+                .getResultList();
     }
 
     @Override

@@ -7,6 +7,7 @@ package cz.muni.pa165.ddtroops.dao;
 
 import cz.muni.pa165.ddtroops.entity.Group;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -19,5 +20,8 @@ public interface GroupDao {
     public List<Group> getAllGroups();
     public void updateGroup(Long fromId, Group to);
     public void deleteGroup(Group troop);
+
+    public void setEntityManager(EntityManager manager);
+
 }
 
