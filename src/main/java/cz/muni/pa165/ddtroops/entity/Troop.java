@@ -4,20 +4,19 @@
  */
 package cz.muni.pa165.ddtroops.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
  * Troop contains name, mission and amount of gold.
  * 
- * @author ciffi
+ * @author Filip Ciffary
  */
-public class Troop {
+@Entity
+public class Troop implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -28,6 +27,9 @@ public class Troop {
     private String mission;
     private BigDecimal gold;
 
+    public Troop() {
+    }
+    
     public Troop(String name, String mission, BigDecimal gold) {
         if (name == null) throw new IllegalArgumentException("name");
         this.name = name;
