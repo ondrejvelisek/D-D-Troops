@@ -11,8 +11,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
- *
- * @author ciffi
+ * Implementation of TroopDao interface
+ * 
+ * @author Filip Ciffary
  */
 public class TroopDaoImpl implements TroopDao{
     
@@ -55,12 +56,11 @@ public class TroopDaoImpl implements TroopDao{
     @Override
     public void updateTroop(Long fromId, Troop to) {
         Troop from = getTroopById(fromId);
-        em.getTransaction().begin();
         from.setId(to.getId());
         from.setName(to.getName());
         from.setMission(to.getMission());
         from.setGold(to.getGold());
-        em.getTransaction().commit();
+        em.merge(from);
     }
 
     @Override
